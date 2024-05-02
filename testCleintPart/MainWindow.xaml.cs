@@ -17,9 +17,18 @@ namespace testCleintPart
 
         public MainWindow()
         {
+            InitializeComponent();
+
             _viewModel = new ImageViewModel();
             DataContext = _viewModel;
             _apiService = new ImageApiService();
+
+            Loaded += MainWindow_Loaded;
+        }
+
+        private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            _viewModel.Images = await _apiService.GetAllImages();
         }
 
         private async void GetImages_Click(object sender, RoutedEventArgs e)
